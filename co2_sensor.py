@@ -11,4 +11,4 @@ while True:
     randNumber = uniform(20.0, 21.0)
     client.publish("CO2LEVEL", randNumber)
     print("Just published " + str(randNumber) + " to topic CO2LEVEL")
-    time.sleep(60)
+    time.sleep(1)
