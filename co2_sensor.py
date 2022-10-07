@@ -12,3 +12,4 @@ while True:
     client.publish("CO2LEVEL", randNumber)
     print("Just published " + str(randNumber) + " to topic CO2LEVEL")
     time.sleep(1)
+    # print("alles kaputt Rolf")
