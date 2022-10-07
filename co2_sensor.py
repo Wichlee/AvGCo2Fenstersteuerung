@@ -1,14 +1,15 @@
 import paho.mqtt.client as mqtt
-from random import randrange, uniform
+from random import uniform
 import time
 
-mqttBroker = "test.mosquitto.org"
+mqttBrokerUri = "localhost"
+mqttBrokerPort = 1883
 
-client = mqtt.Client("Co2_level")
-client.connect(mqttBroker)
+client = mqtt.Client("CO2_Sensor")
+client.connect(mqttBrokerUri, mqttBrokerPort)
 
 while True:
     randNumber = uniform(1000.0, 3500.0)
     client.publish("CO2LEVEL", randNumber)
-    print("Just published " + str(randNumber) + " to topic CO2LEVEL")
+    print(str(randNumber) + "ppm published to topic CO2LEVEL")
     time.sleep(60)
