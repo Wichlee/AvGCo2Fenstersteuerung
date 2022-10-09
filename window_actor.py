@@ -9,13 +9,13 @@ WindowIsOpen = False
 def on_message(client, userdata, message):
     print("recieved message: ", str(message.payload.decode("utf-8")))
     if message >= 1500:
-        print("Öffne Fenster")
+        print("Opening Window")
         WindowIsOpen = True
     if message < 1500:
-        print("Schließe Fenster")
+        print("Closing Window")
         WindowIsOpen = False
 
-client = mqtt.Client("Fenstersteuerung")
+client = mqtt.Client("Window Controller")
 client.connect((mqttBrokerHostname, mqttBrokerPort))
 
 client.loop_start()
