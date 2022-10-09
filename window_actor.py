@@ -1,26 +1,30 @@
+import time
 import paho.mqtt.client as mqtt
 
 mqttBrokerHostname = "localhost"
 mqttBrokerPort = 1883
-topic = "CO2LEVEL"
 WindowIsOpen = False
 
 
-def on_message(client, userdata, message):
-    print("recieved message: ", str(message.payload.decode("utf-8")))
-    if message >= 1500:
+def act(client, userdata, message):
+    co2_level = float(message.payload.decode("utf-8"))
+    print("recieved message: ", co2_level)
+    print("message topic: ", message.topic)
+
+    if co2_level >= 1500.0:
         print("Opening Window")
         WindowIsOpen = True
-    if message < 1500:
+    if co2_level < 1500.0:
         print("Closing Window")
         WindowIsOpen = False
 
 client = mqtt.Client("Window Controller")
-client.connect((mqttBrokerHostname, mqttBrokerPort))
+client.connect(mqttBrokerHostname, mqttBrokerPort)
 
 client.loop_start()
 
 client.subscribe("CO2_Sensor")
-client.on_message = on_message()
+client.on_message = act()
 
+time.sleep(30)
 client.loop_stop()
