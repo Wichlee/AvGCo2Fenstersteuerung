@@ -1,6 +1,6 @@
 import paho.mqtt.client as mqtt
 
-mqttBrokerUri = "localhost"
+mqttBrokerHostname = "localhost"
 mqttBrokerPort = 1883
 topic = "CO2LEVEL"
 WindowIsOpen = False
@@ -8,7 +8,7 @@ WindowIsOpen = False
 
 def on_message(client, userdata, message):
     print("recieved message: ", str(message.payload.decode("utf-8")))
-    if message > 1500:
+    if message >= 1500:
         print("Öffne Fenster")
         WindowIsOpen = True
     if message < 1500:
@@ -16,7 +16,7 @@ def on_message(client, userdata, message):
         WindowIsOpen = False
 
 client = mqtt.Client("Fenstersteuerung")
-client.connect((mqttBrokerUri, mqttBrokerPort))
+client.connect((mqttBrokerHostname, mqttBrokerPort))
 
 client.loop_start()
 
