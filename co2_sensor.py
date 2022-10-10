@@ -4,13 +4,14 @@ import time
 
 mqttBrokerHostname = "localhost"
 mqttBrokerPort = 1883
+client_id = "co2_sensor"
 
-client = mqtt.Client()
+client = mqtt.Client(client_id)
 client.connect(mqttBrokerHostname, mqttBrokerPort)
-print("Succesfully conntected to broker", mqttBrokerHostname, mqttBrokerPort)
+print("Client", client_id, "succesfully conntected to broker", mqttBrokerHostname, mqttBrokerPort)
 
 while True:
-    randNumber = uniform(1000.0, 3500.0)
+    randNumber = int(uniform(1000, 3500))
     client.publish("AvG/co2level", randNumber)
     print(str(randNumber) + " ppm published to topic CO2LEVEL")
     time.sleep(60)

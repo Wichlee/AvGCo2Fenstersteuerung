@@ -4,10 +4,11 @@ import time
 mqttBrokerHostname = "localhost"
 mqttBrokerPort = 1883
 WindowIsOpen = False
+client_id = "window_actor"
 
 
 def on_message(message):
-    co2_level = float(message.payload.decode("utf-8"))
+    co2_level = message.payload
     print("recieved message: ", co2_level)
     print("message topic: ", message.topic)
 
@@ -18,14 +19,14 @@ def on_message(message):
         print("Closing Window")
         WindowIsOpen = False
 
-client = mqtt.Client()
+client = mqtt.Client(client_id)
 client.connect(mqttBrokerHostname, mqttBrokerPort)
-print("Succesfully conntected to broker", mqttBrokerHostname, mqttBrokerPort)
+print("Client", client_id, "succesfully conntected to broker", mqttBrokerHostname, mqttBrokerPort)
 
 client.loop_start()
 
 client.subscribe("AvG/co2level")
 client.on_message = on_message
 
-time.sleep(30)
+time.sleep(120)
 client.loop_stop()
