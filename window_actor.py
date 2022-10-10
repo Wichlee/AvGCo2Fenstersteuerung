@@ -23,10 +23,7 @@ client = mqtt.Client(client_id)
 client.connect(mqttBrokerHostname, mqttBrokerPort)
 print("Client", client_id, "succesfully conntected to broker", mqttBrokerHostname, mqttBrokerPort)
 
-client.loop_start()
+client.loop_forever()
 
 client.subscribe("AvG/co2level")
 client.on_message = on_message
-
-time.sleep(120)
-client.loop_stop()
