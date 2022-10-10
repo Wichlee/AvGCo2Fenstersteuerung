@@ -20,10 +20,11 @@ def on_message(client, userdata, message):
         WindowIsOpen = False
 
 client = mqtt.Client(client_id)
+client.on_message = on_message
 client.connect(mqttBrokerHostname, mqttBrokerPort)
 print("Client", client_id, "succesfully conntected to broker", mqttBrokerHostname, mqttBrokerPort)
 
 client.loop_forever()
 
 client.subscribe("AvG/co2level")
-client.on_message = on_message
+
