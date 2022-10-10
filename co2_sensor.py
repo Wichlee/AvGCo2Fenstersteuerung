@@ -13,5 +13,5 @@ print("Client", client_id, "succesfully conntected to broker", mqttBrokerHostnam
 while True:
     randNumber = int(uniform(1000, 3500))
     client.publish("AvG/co2level", randNumber)
-    print(str(randNumber) + " ppm published to topic CO2LEVEL")
+    print(str(randNumber) + " ppm published to topic AvG/co2level")
     time.sleep(60)
