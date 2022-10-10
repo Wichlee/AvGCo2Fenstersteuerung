@@ -1,12 +1,12 @@
-import time
 import paho.mqtt.client as mqtt
+import time
 
 mqttBrokerHostname = "localhost"
 mqttBrokerPort = 1883
 WindowIsOpen = False
 
 
-def act(client, userdata, message):
+def on_message(message):
     co2_level = float(message.payload.decode("utf-8"))
     print("recieved message: ", co2_level)
     print("message topic: ", message.topic)
@@ -18,13 +18,14 @@ def act(client, userdata, message):
         print("Closing Window")
         WindowIsOpen = False
 
-client = mqtt.Client("Window Controller")
+client = mqtt.Client()
 client.connect(mqttBrokerHostname, mqttBrokerPort)
+print("Succesfully conntected to broker", mqttBrokerHostname, mqttBrokerPort)
 
 client.loop_start()
 
-client.subscribe("CO2_Sensor")
-client.on_message = act()
+client.subscribe("AvG/co2level")
+client.on_message = on_message
 
 time.sleep(30)
 client.loop_stop()
